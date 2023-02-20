@@ -1,4 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from ckeditor.fields import RichTextField
+
+
+class User(AbstractUser):
+    pass
 
 
 class BaseModel(models.Model):
@@ -19,7 +25,7 @@ class Category(models.Model):
 
 class Course(BaseModel):
     subject = models.CharField(max_length=255)
-    description = models.TextField()
+    description = RichTextField()
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     image = models.ImageField(upload_to='courses/%Y/%m/', null=True, blank=True)
 
