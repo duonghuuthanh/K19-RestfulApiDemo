@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses.apps.CoursesConfig',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'rest_framework',
+    'drf_yasg'
 ]
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/courses/"
@@ -79,7 +81,6 @@ WSGI_APPLICATION = 'ecourseapp.wsgi.application'
 
 
 import pymysql
-
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
@@ -91,6 +92,8 @@ DATABASES = {
         'HOST': ''  # mặc định localhost
     }
 }
+
+AUTH_USER_MODEL = 'courses.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
