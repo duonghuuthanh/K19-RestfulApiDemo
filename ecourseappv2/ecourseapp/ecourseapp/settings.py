@@ -39,10 +39,17 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
-    'drf_yasg'
+    'drf_yasg',
+    'oauth2_provider'
 ]
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/courses/"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,6 +88,7 @@ WSGI_APPLICATION = 'ecourseapp.wsgi.application'
 
 
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
