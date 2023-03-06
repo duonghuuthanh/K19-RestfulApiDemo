@@ -39,10 +39,17 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
-    'drf_yasg'
+    'drf_yasg',
+    'oauth2_provider'
 ]
 
 CKEDITOR_UPLOAD_PATH = "ckeditors/courses/"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +85,7 @@ WSGI_APPLICATION = 'ecourseapp.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
@@ -131,3 +139,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CLIENT_ID = 'az3IDzdzEO6y3y569QqdDqlscTGOzi23D8JW7VIk'
+CLIENT_SECERT= '0KA5HHYu0eQltDaQWPMqRywYNB5NHVfG8fuV0SmAugz3Bg8h0wSBjcvGQfjjI9yDGdzX93H4KocqsMuaTDWcrvxdPT7J9Zx8KiV15cNQzLXw2EBNOaYGYtpQcFLmgHfo'
