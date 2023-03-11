@@ -57,7 +57,7 @@ class LessonViewSet(viewsets.ViewSet, generics.RetrieveAPIView):
     queryset = Lesson.objects.filter(active=True)
     serializer_class = LessonDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
-    
+
     def get_permissions(self):
         if self.action in ['assign_tags']:
             return [permissions.IsAuthenticated()]
