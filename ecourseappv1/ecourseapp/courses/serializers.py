@@ -1,4 +1,4 @@
-from .models import Category, Course, Lesson, Tag, User
+from .models import Category, Course, Lesson, Tag, User, Comment
 from rest_framework import serializers
 
 
@@ -51,4 +51,10 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id', 'content', 'created_date', 'updated_date']
 

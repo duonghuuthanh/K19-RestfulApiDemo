@@ -8,6 +8,7 @@ router.register('categories', views.CategoryViewSet)
 router.register('courses', views.CourseViewSet)
 router.register('lessons', views.LessonViewSet)
 router.register('users', views.UserViewSet)
+router.register('comments', views.CommentViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
