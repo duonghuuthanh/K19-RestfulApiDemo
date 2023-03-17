@@ -61,8 +61,6 @@ class AuthorizedLessonDetailsSerializer(LessonDetailsSerializer):
         fields = LessonSerializer.Meta.fields + ['liked', 'rate']
 
 
-
-
 class UserSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField(source='avatar')
 
