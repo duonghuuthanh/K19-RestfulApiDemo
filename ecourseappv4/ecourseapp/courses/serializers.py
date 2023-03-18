@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Course, Lesson, Tag, User
+from .models import Category, Course, Lesson, Tag, User, Comment
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -43,6 +43,26 @@ class LessonDetailSerializer(LessonSerializer):
         fields = LessonSerializer.Meta.fields + ['content', 'tags']
 
 
+class AuthorizedLessonDetailSerializer(LessonDetailSerializer):
+    liked = serializers.SerializerMethodField()
+    rate = serializers.SerializerMethodField()
+
+    def get_liked(self, lesson):
+        request = self.context.get('request')
+        if request:
+            return lesson.like_set.filter(user=request.user, liked=True).exists()
+
+    def get_rate(self, lesson):
+        request = self.context.get('request')
+        if request:
+            r = lesson.rating_set.filter(user=request.user).first()
+            return r.rate if r else 0
+
+    class Meta:
+        model = LessonDetailSerializer.Meta.model
+        fields = LessonDetailSerializer.Meta.fields + ['liked', 'rate']
+
+
 class UserSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField(source='avatar')
 
@@ -65,4 +85,12 @@ class UserSerializer(serializers.ModelSerializer):
             'avatar': {'write_only': 'True'},
             'password': {'write_only': 'True'}
         }
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'content', 'created_date', 'user']
 
