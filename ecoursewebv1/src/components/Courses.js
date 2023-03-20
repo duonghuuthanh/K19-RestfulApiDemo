@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Card, Col, Container, Row, Button } from "react-bootstrap"
+import { Card, Col, Container, Row, Button, ButtonGroup } from "react-bootstrap"
 import API, { endpoinds } from "../configs/API"
 
 const Courses = () => {
@@ -27,12 +27,14 @@ const Courses = () => {
         <>
         
         <Container>
-            <Button onClick={prevPage}>&lt;&lt;</Button>
-            <Button onClick={nextPage}>&gt;&gt;</Button>
+            <ButtonGroup aria-label="paging" style={{paddingTop: '0.5rem'}}>
+                <Button onClick={prevPage} variant="primary">&lt;&lt;</Button>
+                <Button onClick={nextPage} variant="success">&gt;&gt;</Button>
+            </ButtonGroup>
             <Row>
                 {courses.map(c => {
                     return (
-                        <Col md={3} xs={12}>
+                        <Col md={3} xs={12} style={{padding: '0.5rem'}}>
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src={c.image} />
                                 <Card.Body>
