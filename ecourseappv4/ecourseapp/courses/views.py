@@ -92,7 +92,6 @@ class LessonViewSet(viewsets.ViewSet, generics.RetrieveAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
