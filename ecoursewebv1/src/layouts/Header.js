@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
 import { Container, Form, Nav, Navbar, Button } from "react-bootstrap"
+import { Link, useNavigate } from "react-router-dom"
 import API, { endpoinds } from "../configs/API"
 
 const Header = () => {
     const [categories, setCategories] = useState([])
+    const [kw, setKw] = useState()
+    const nav = useNavigate()
 
     useEffect(() => {
         const loadCategories = async () => {
@@ -14,6 +17,11 @@ const Header = () => {
         loadCategories()
     }, [])
 
+    const search = (evt) => {
+        evt.preventDefault()
+        nav(`/?kw=${kw}`)
+    }
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
@@ -21,17 +29,22 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="#home">Trang chu</Nav.Link>
-                    {categories.map(c => <Nav.Link href="#link">{c.name}</Nav.Link>)}
+                    <Link className="nav-link" href="#home">Trang chủ</Link>
+                    {categories.map(c => {
+                        let url = `/?category_id=${c.id}`
+                        return <Link className="nav-link" to={url}>{c.name}</Link>
+                    })}
                 </Nav>
-                <Form className="d-flex">
+                <Form onSubmit={search} className="d-flex">
                   <Form.Control
+                    value={kw}
+                    onChange={evt => setKw(evt.target.value)}
                     type="search"
                     placeholder="Nhập tên khóa học..."
                     className="me-2"
-                    aria-label="Searcj"
+                    aria-label="Search"
                   />
-                  <Button variant="outline-success">Tìm</Button>
+                  <Button type="submit" variant="outline-success">Tìm</Button>
                 </Form>
                 </Navbar.Collapse>
             </Container>
