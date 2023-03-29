@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap"
+import { Link, useNavigate } from "react-router-dom"
 import API, { endpoints } from "../configs/API"
 
 const Header = () => {
     const [categories, setCategories] = useState([])
+    const [q, setQ] = useState()
+    const nav = useNavigate()
 
     useEffect(() => {
         const loadCategories = async () => {
@@ -14,6 +17,11 @@ const Header = () => {
         loadCategories()
     }, [])
 
+    const search = (evt) => {
+        evt.preventDefault()
+        nav(`/?q=${q}`)
+    }
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
@@ -21,17 +29,17 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="#home">Trang chủ</Nav.Link>
-                    {categories.map(c => <Nav.Link href="#link">{c.name}</Nav.Link>)}
+                    <Link to="/" className="nav-link">Trang chủ</Link>
+                    {categories.map(c => {
+                        let url = `/?cateId=${c.id}`
+                        return <Link className="nav-link" to={url}>{c.name}</Link>
+                    })}
                 </Nav>
-                <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Tên khóa học..."
-                    className="me-2"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-success">Tìm</Button>
+                <Form onSubmit={search} className="d-flex">
+                  <Form.Control type="search" placeholder="Tên khóa học..."
+                        className="me-2" aria-label="Search" value={q}
+                        onChange={evt => setQ(evt.target.value)} />
+                  <Button type="submit" variant="outline-success">Tìm</Button>
                 </Form>
                 </Navbar.Collapse>
             </Container>
