@@ -1,15 +1,28 @@
 import { useEffect, useState } from "react"
-import { Button, ButtonGroup, Card, Col, Container, Row, Spinner } from "react-bootstrap"
+import { Button, ButtonGroup, Row } from "react-bootstrap"
+import { useSearchParams } from "react-router-dom"
 import API, { endpoints } from "../configs/API"
+import Items from "../layouts/Items"
+import Loading from "../layouts/Loading"
 
 const Courses = () => {
     const [courses, setCourses] = useState(null)
     const [page, setPage] = useState(1)
+    const [q] = useSearchParams()
 
     useEffect(() => {
         const loadCourses = async () => {
             try {
                 let e = `${endpoints['courses']}?page=${page}`
+
+                let k = q.get("q")
+                if (k !== null)
+                    e += `&q=${k}`
+
+                let cateId = q.get("cateId")
+                if (cateId !== null)
+                    e += `&category_id=${cateId}`
+
                 let res = await API.get(e)
                 setCourses(res.data.results)
             } catch (ex) {
@@ -17,38 +30,29 @@ const Courses = () => {
             }
         }
 
+        setCourses(null)
         loadCourses()
-    }, [page])
+    }, [page, q])
 
     const nextPage = () => setPage(current => current + 1)
     const prevPage = () => setPage(current => current - 1)
 
     if (courses === null)
-        return <Spinner animation="grow" variant="success" />
+        return <Loading />
+
+    if (courses.length === 0)
+        return <div className="alert alert-info m-1">KHÔNG có khóa học nào!!!</div>
 
     return (
-        <Container>
+        <>
             <ButtonGroup aria-label="Basic example" className="mt-2">
                 <Button onClick={prevPage} variant="outline-primary">&lt;&lt;</Button>
                 <Button onClick={nextPage} variant="outline-primary">&gt;&gt;</Button>
             </ButtonGroup>
             <Row>
-                {courses.map(c => {
-                    return (
-                        <Col md={3} xs={12} key={c.id} className="p-2">
-                            <Card>
-                                <Card.Img variant="top" src={c.image} />
-                                <Card.Body>
-                                    <Card.Title>{c.subject}</Card.Title>
-                                    <Button variant="primary">Xem chi tiết</Button>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    )
-                })}
-                
+                {courses.map(c => <Items key={c.id} obj={c} />)}
             </Row>
-        </Container>
+        </>
     )
 }
 

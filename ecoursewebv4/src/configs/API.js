@@ -2,9 +2,11 @@ import axios from "axios";
 
 export const endpoints = {
     "categories": "/categories/",
-    "courses": "/courses/"
+    "courses": "/courses/",
+    "lessons": (courseId) => `/courses/${courseId}/lessons/`,
+    "lesson-details": (lessonId) => `/lessons/${lessonId}/` 
 }
 
 export default axios.create({
-    baseURL: "http://127.0.0.1:8000/"
+    baseURL: "http://thanhduong.pythonanywhere.com/"
 })
