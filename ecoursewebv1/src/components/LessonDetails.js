@@ -14,7 +14,7 @@ const LessonDetails = () => {
         }
 
         loadLesson()
-    }, [])
+    }, [lessonId])
 
     if (lesson === null)
         return <Loading /> 
@@ -22,7 +22,7 @@ const LessonDetails = () => {
     return (
         <>
             <h1 className="text-center text-success">{lesson.subject}</h1>
-            <img src={lesson.image} width="200" />
+            <img src={lesson.image} width="200" alt={lesson.subject} />
             <p dangerouslySetInnerHTML={{__html:lesson.content}}></p>
         </>    
     )

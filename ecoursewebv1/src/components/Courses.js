@@ -46,11 +46,11 @@ const Courses = () => {
         return <Loading />
     
     if (courses.length === 0)
-        return <div className="alert alert-info">Không có khóa học nào!</div>
+        return <div className="alert alert-info m-1">Không có khóa học nào!</div>
 
     return (
         <>
-            <ButtonGroup aria-label="paging" style={{paddingTop: '0.5rem'}}>
+            <ButtonGroup aria-label="paging" className="m-1">
                 <Button onClick={prevPage} variant="primary">&lt;&lt;</Button>
                 <Button onClick={nextPage} variant="success">&gt;&gt;</Button>
             </ButtonGroup>

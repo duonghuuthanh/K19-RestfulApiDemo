@@ -16,7 +16,7 @@ const Lessons = () => {
         }
 
         loadLessons()
-    }, [])
+    }, [courseId])
 
     if (lessons === null)
         return <Loading />

@@ -4,7 +4,9 @@ export const endpoinds = {
     'categories': '/categories/',
     'courses': '/courses/',
     'lessons': (courseId) => `/courses/${courseId}/lessons/`,
-    'lesson-detail': (lessonId) => `/lessons/${lessonId}/`
+    'lesson-detail': (lessonId) => `/lessons/${lessonId}/`,
+    'login': '/o/token/',
+    'current-user': '/users/current-user/'
 }
 
 export default axios.create({
