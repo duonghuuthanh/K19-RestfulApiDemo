@@ -3,39 +3,49 @@ import { Button, Form } from "react-bootstrap"
 import cookie from "react-cookies"
 import API, { endpoinds } from "../configs/API"
 import { UserContext } from "../configs/MyContext"
+import Loading from "../layouts/Loading"
 import Courses from "./Courses"
 
 const Login = () => {
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
+    const [loading, setLoading] = useState(false)
     const [user, dispatch] = useContext(UserContext)
 
     const login = (evt) => {
         evt.preventDefault()
 
         const process = async () => {
-            let res = await API.post(endpoinds['login'], {
-                "username": username,
-                "password": password,
-                "client_id": "Vbe8euZZQJoWJ2UzW9wDThg4hJEZHHbhFmnfj7UR",
-                "client_secret": "cVm4w4hSdy4MtwbP4KuNgXkGPeQJ9yrQdBvXHGR6b3e97F2bYqQ81XJ49FEufzjcw4SKwpuOZQiCLsNelHY1MkuYTGBRcSqtWmSlebSUk27WfyDskCB2VeCQihnEKdZ2",
-                "grant_type": "password"
-            })
+            try {
+                setLoading(true)
+                
+                let res = await API.post(endpoinds['login'], {
+                    "username": username,
+                    "password": password,
+                    "client_id": "Vbe8euZZQJoWJ2UzW9wDThg4hJEZHHbhFmnfj7UR",
+                    "client_secret": "cVm4w4hSdy4MtwbP4KuNgXkGPeQJ9yrQdBvXHGR6b3e97F2bYqQ81XJ49FEufzjcw4SKwpuOZQiCLsNelHY1MkuYTGBRcSqtWmSlebSUk27WfyDskCB2VeCQihnEKdZ2",
+                    "grant_type": "password"
+                })
 
-            cookie.save("access_token", res.data.access_token)
+                cookie.save("access_token", res.data.access_token)
 
-            let user = await API.get(endpoinds['current-user'], {
-                headers: {
-                    "Authorization": `Bearer ${cookie.load('access_token')}`
-                }
-            })
-
-            cookie.save("current-user", user.data)
-
-            dispatch({
-                "type": "login",
-                "payload": user.data
-            })
+                let user = await API.get(endpoinds['current-user'], {
+                    headers: {
+                        "Authorization": `Bearer ${cookie.load('access_token')}`
+                    }
+                })
+    
+                cookie.save("current-user", user.data)
+    
+                dispatch({
+                    "type": "login",
+                    "payload": user.data
+                })
+            } catch (ex) {
+                
+            } finally {
+                setLoading(false)
+            }
         }
 
         process()
@@ -48,7 +58,7 @@ const Login = () => {
             <Form onSubmit={login}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Tên đăng nhập</Form.Label>
-                    <Form.Control type="text" 
+                    <Form.Control type="text" required
                                     value={username}
                                     onChange={e => setUsername(e.target.value)}
                                     placeholder="Tên đăng nhập..." />
@@ -62,9 +72,8 @@ const Login = () => {
                                     placeholder="Mật khẩu" />
                 </Form.Group>
                 
-                <Button type="submit" variant="primary">
-                    Đăng nhập
-                </Button>
+                {loading? <Loading />:<Button type="submit" variant="primary">Đăng nhập</Button>}
+               
             </Form>
             </>
         )

@@ -36,7 +36,7 @@ const Header = () => {
         userInfo = (
             <>
                 <Link className="nav-link text-danger" to="/login">
-                    <img src="{user.image}" width={40} alt={user.username} className="rounded-circle" />
+                    <img src={user.image} width={40} alt={user.username} className="rounded-circle" />
 
                     <span className="text-info">Welcome {user.username}!</span>
                 </Link>

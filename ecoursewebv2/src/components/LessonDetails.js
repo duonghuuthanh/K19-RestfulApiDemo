@@ -15,7 +15,7 @@ const LessonDetails = () => {
         }
 
         loadLesson()
-    }, [])
+    }, [lessonId])
 
     if (lesson === null)
         return <Loading />
@@ -24,7 +24,7 @@ const LessonDetails = () => {
         <>
             <h1 className="text-center text-success">{lesson.subject}</h1>
             <div>
-                <img width="200" src={lesson.image} />
+                <img width="200" alt="lesson.subject" src={lesson.image} />
                 <div>
                     {lesson.tags.map(t => <Badge key={t.id} bg="primary" className="m-1">{t.name}</Badge>)}
                 </div>

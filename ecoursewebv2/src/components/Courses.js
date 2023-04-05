@@ -46,8 +46,8 @@ const Courses = () => {
     return (
         <>
             <ButtonGroup aria-label="paging" className="p-1">
-                <Button onClick={prevPage} variant="outline-secondary">&#11013;</Button>
-                <Button onClick={nextPage} variant="outline-secondary">&#10145;</Button>
+                <Button onClick={prevPage} variant="outline-secondary">&lt;&lt;</Button>
+                <Button onClick={nextPage} variant="outline-secondary">&gt;&gt;</Button>
             </ButtonGroup>
             <Row>
                 {courses.map(c => <Items key={c.id} obj={c} />)}
