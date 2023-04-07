@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { Button, ButtonGroup, Card, Col, Container, Row } from "react-bootstrap"
-import { Link, useSearchParams } from "react-router-dom"
+import { Button, ButtonGroup, Row } from "react-bootstrap"
+import { useSearchParams } from "react-router-dom"
 import API, { endpoints } from "../configs/API"
 import Items from "../layouts/Items"
 import Loading from "../layouts/Loading"
@@ -46,12 +46,11 @@ const Courses = () => {
     return (
         <>
             <ButtonGroup aria-label="Paginator" className="p-2">
-                <Button onClick={prevPage} variant="outline-primary">&#11013;</Button>
-                <Button onClick={nextPage} variant="outline-primary">&#10145;</Button>
+                <Button onClick={prevPage} variant="outline-primary">&lt;&lt;</Button>
+                <Button onClick={nextPage} variant="outline-primary">&gt;&gt;</Button>
             </ButtonGroup>
             <Row>
                 {courses.map(c => {
-                    let url = `/courses/${c.id}/lessons`
                     return <Items key={c.id} obj={c} />
                 })}
             </Row>
