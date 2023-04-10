@@ -1,15 +1,16 @@
 import { useContext, useState } from "react"
 import { Button, Form } from "react-bootstrap"
 import cookie from "react-cookies"
+import { Navigate } from "react-router-dom"
 import API, { endpoinds } from "../configs/API"
 import { UserContext } from "../configs/MyContext"
 import Loading from "../layouts/Loading"
-import Courses from "./Courses"
 
 const Login = () => {
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
     const [loading, setLoading] = useState(false)
+    const [err, setErr] = useState()
     const [user, dispatch] = useContext(UserContext)
 
     const login = (evt) => {
@@ -42,7 +43,7 @@ const Login = () => {
                     "payload": user.data
                 })
             } catch (ex) {
-                
+                setErr("Username hoặc password không chính xác!")
             } finally {
                 setLoading(false)
             }
@@ -51,34 +52,37 @@ const Login = () => {
         process()
     }
 
-    if (user === null)
-        return (
-            <>
-            <h1 className="text-center text-success">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
-            <Form onSubmit={login}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Tên đăng nhập</Form.Label>
-                    <Form.Control type="text" required
-                                    value={username}
-                                    onChange={e => setUsername(e.target.value)}
-                                    placeholder="Tên đăng nhập..." />
-                </Form.Group>
+    if (user !== null)
+        return <Navigate to="/" />
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Mật khẩu</Form.Label>
-                    <Form.Control type="password"   
-                                    value={password}
-                                    onChange={e => setPassword(e.target.value)}
-                                    placeholder="Mật khẩu" />
-                </Form.Group>
-                
-                {loading? <Loading />:<Button type="submit" variant="primary">Đăng nhập</Button>}
-               
-            </Form>
-            </>
-        )
+    return (
+        <>
+        <h1 className="text-center text-success">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
 
-    return <Courses />
+        {err?<div className="alert alert-danger">{err}</div>:""}
+
+        <Form onSubmit={login}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Tên đăng nhập</Form.Label>
+                <Form.Control type="text" required
+                                value={username}
+                                onChange={e => setUsername(e.target.value)}
+                                placeholder="Tên đăng nhập..." />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Mật khẩu</Form.Label>
+                <Form.Control type="password"   
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                placeholder="Mật khẩu" />
+            </Form.Group>
+            
+            {loading? <Loading />:<Button type="submit" variant="primary">Đăng nhập</Button>}
+            
+        </Form>
+        </>
+    )
 }
 
 export default Login

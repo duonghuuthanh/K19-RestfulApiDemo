@@ -11,6 +11,7 @@ import { UserContext } from './configs/MyContext';
 import UserReducer from './reducers/UserReducer';
 import { useReducer } from 'react';
 import cookie from 'react-cookies';
+import Register from './components/Register';
 
 function App() {
   let current = cookie.load("current-user")
@@ -29,6 +30,7 @@ function App() {
             <Route path='/courses/:courseId/lessons' element={<Lessons />} />
             <Route path='/lessons/:lessonId' element={<LessonDetails />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
           </Routes>
         </Container>
         <Footer />

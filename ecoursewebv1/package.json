@@ -12,6 +12,7 @@
     "react-bootstrap": "^2.7.2",
     "react-cookies": "^0.1.1",
     "react-dom": "^18.2.0",
+    "react-rating": "^2.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.0"
