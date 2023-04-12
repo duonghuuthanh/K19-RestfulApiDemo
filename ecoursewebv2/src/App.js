@@ -7,6 +7,7 @@ import Courses from './components/Courses';
 import LessonDetails from './components/LessonDetails';
 import Lessons from './components/Lessons';
 import Login from './components/Login';
+import Register from './components/Register';
 import { UserContext } from './configs/MyContext';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
@@ -26,6 +27,7 @@ function App() {
             <Route path='/courses/:courseId/lessons' element={<Lessons />} />
             <Route path='/lessons/:lessonId' element={<LessonDetails />} />
             <Route path='/login' element={<Login />} /> 
+            <Route path='/register' element={<Register />} /> 
             <Route path='*' element={<h1>Comming soon...</h1>}></Route>
           </Routes>
         </Container>

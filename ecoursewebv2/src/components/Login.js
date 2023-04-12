@@ -42,11 +42,7 @@ const Login = () => {
             } finally {
                 setLoading(false)
             }
-            
-            
         }
-
-
         
         if (username === "" || username === undefined || password === "" || password === undefined) {
             setError("username hoac password không được rỗng!")
@@ -58,13 +54,11 @@ const Login = () => {
     if (user !== null)
         return <Navigate to="/" />
 
-    let err = <div className="alert alert-danger">{error}</div>
-
     return (
         <>
             <h1 className="text-center text-success">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
 
-            {error !== undefined ?err:""}
+            {error?<div className="alert alert-danger">{error}</div>:""}
 
             <Form onSubmit={login}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">

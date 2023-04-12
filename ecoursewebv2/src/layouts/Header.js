@@ -33,6 +33,7 @@ const Header = () => {
     let userInfo = (
         <>
             <Link to="/login" className="nav-link text-success">&#129489; Đăng nhập</Link>
+            <Link to="/register" className="nav-link text-success">&#129489; Đăng ký</Link>
         </>
     )
     if (user !== null)
