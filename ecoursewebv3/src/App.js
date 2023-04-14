@@ -11,6 +11,7 @@ import Header from './layouts/Header';
 import userReducer from './reducers/UserReducer'
 import {UserContext} from './configs/MyContext'
 import cookie from 'react-cookies';
+import Register from './components/Register';
 
 function App() {
   const [user, dispatch] = useReducer(userReducer, cookie.load('current-user') || null)
@@ -25,6 +26,7 @@ function App() {
             <Route path='/courses/:courseId/lessons' element={<Lessons />} />
             <Route path='/lessons/:lessonId' element={<LessonDetails />} />
             <Route path='/login' element={<Login />} /> 
+            <Route path='/register' element={<Register />} /> 
             <Route path='*' element={<h3 className='text-success'>Comming soon...</h3>} />
           </Routes>
         </Container>

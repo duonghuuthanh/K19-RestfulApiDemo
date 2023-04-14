@@ -33,6 +33,7 @@ const Header = () => {
     let userInfo = (
         <>
             <Link to="/login" className="nav-link text-success">&#128104; Đăng nhập</Link>
+            <Link to="/register" className="nav-link text-danger">&#128104; Đăng ký</Link>
         </>
     )
 

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { Badge } from "react-bootstrap"
+import { Badge, Button, Col, Form, Row } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import API, { endpoints } from "../configs/API"
 import Loading from "../layouts/Loading"
 
 const LessonDetails = () => {
     const [lesson, setLesson] = useState(null)
+    const [comments, setComments] = useState(null)
     const {lessonId} = useParams()
 
     useEffect(() => {
@@ -15,6 +16,15 @@ const LessonDetails = () => {
         }
 
         loadLesson()
+    }, [])
+
+    useEffect(() => {
+        let loadComments = async () => {
+            let res = await API.get(endpoints['comments'](lessonId))
+            setComments(res.data)
+        }
+
+        loadComments()
     }, [])
 
     if (lesson === null)
@@ -30,6 +40,32 @@ const LessonDetails = () => {
                 </div>
             </div>
             <p dangerouslySetInnerHTML={{__html: lesson.content}}></p>
+            
+            <hr></hr>
+            <Form>
+                <Form.Group className="mb-3" controlId="comment-content">
+                    <Form.Label>Nội dung bình luận</Form.Label>
+                    <Form.Control as="textarea" rows={3} />
+                </Form.Group>
+                <Button>Bình luận</Button>
+            </Form>
+            <hr></hr>
+
+            {comments === null?<Loading />:
+                comments.map(c => (
+                    <Row className="bg-warning m-1 p-2">
+                        <Col md={1} xs={3}>
+                            <img src={c.user.image} alt={c.user.username} className="img-fluid rounded-circle" />
+                        </Col>
+                        <Col md={11} xs={9}>
+                            <p>{c.content}</p>
+
+                            <small>Binh luan boi {c.user.username} luc {c.created_date}</small>
+                        </Col>
+                    </Row>
+                ))
+            }
+            
         </>
     )
 }

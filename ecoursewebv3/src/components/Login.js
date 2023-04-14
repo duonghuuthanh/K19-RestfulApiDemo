@@ -16,24 +16,30 @@ const Login = () => {
         evt.preventDefault()
 
         const process = async () => {
-            let res = await API.post(endpoints['login'], {
-                "username": username, 
-                "password": password,
-                "client_id": "Vbe8euZZQJoWJ2UzW9wDThg4hJEZHHbhFmnfj7UR",
-                "client_secret": "cVm4w4hSdy4MtwbP4KuNgXkGPeQJ9yrQdBvXHGR6b3e97F2bYqQ81XJ49FEufzjcw4SKwpuOZQiCLsNelHY1MkuYTGBRcSqtWmSlebSUk27WfyDskCB2VeCQihnEKdZ2",
-                "grant_type": "password"
-            })
+            try {
+                let res = await API.post(endpoints['login'], {
+                    "username": username, 
+                    "password": password,
+                    "client_id": "Vbe8euZZQJoWJ2UzW9wDThg4hJEZHHbhFmnfj7UR",
+                    "client_secret": "cVm4w4hSdy4MtwbP4KuNgXkGPeQJ9yrQdBvXHGR6b3e97F2bYqQ81XJ49FEufzjcw4SKwpuOZQiCLsNelHY1MkuYTGBRcSqtWmSlebSUk27WfyDskCB2VeCQihnEKdZ2",
+                    "grant_type": "password"
+                })
+    
+                cookie.save('access-token', res.data.access_token)
+    
+                let user = await authAPI().get(endpoints['current-user'])
+                cookie.save('current-user', user.data)
+    
+                setLoading(false)
+                dispatch({
+                    "type": "login", 
+                    "payload": user.data
+                })
+            } catch {
 
-            cookie.save('access-token', res.data.access_token)
-
-            let user = await authAPI().get(endpoints['current-user'])
-            cookie.save('current-user', user.data)
-
-            setLoading(false)
-            dispatch({
-                "type": "login", 
-                "payload": user.data
-            })
+            } finally {
+                setLoading(false)
+            }
         }
 
         setLoading(true)
