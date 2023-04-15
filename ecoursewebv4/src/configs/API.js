@@ -8,7 +8,10 @@ export const endpoints = {
     "lesson-details": (lessonId) => `/lessons/${lessonId}/`,
     "login": "/o/token/",
     "current-user": "/users/current-user/",
-    "register": "/users/"
+    "register": "/users/",
+    "comments": (lessonId) => `/lessons/${lessonId}/comments/`,
+    'like-lesson': (lessonId) => `/lessons/${lessonId}/like/`,
+    'rating-lesson': (lessonId) => `/lessons/${lessonId}/rating/`,
 }
 
 export const authAPI = () => axios.create({
