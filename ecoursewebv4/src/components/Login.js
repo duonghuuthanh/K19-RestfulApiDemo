@@ -4,6 +4,8 @@ import cookie from "react-cookies"
 import { Navigate } from "react-router-dom"
 import API, { authAPI, endpoints } from "../configs/API"
 import { MyUserContext } from "../configs/MyContext"
+import ErrorAlert from "../layouts/ErrorAlert"
+import InputItem from "../layouts/InputItem"
 import Loading from "../layouts/Loading"
 
 const Login = () => {
@@ -58,25 +60,13 @@ const Login = () => {
         <>
             <h1 className="text-center text-success">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
 
-            {err?<div className="alert alert-danger">{err}</div>:""}
+            {err?<ErrorAlert err={err} />:""}
             
 
             <Form onSubmit={login}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Tên đăng nhập</Form.Label>
-                    <Form.Control type="text" 
-                                value={username}
-                                onChange={e => setUsername(e.target.value)}
-                                placeholder="Tên đăng nhập" />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Mật khẩu</Form.Label>
-                    <Form.Control type="password" 
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                                placeholder="Mật khẩu" />
-                </Form.Group>
+                <InputItem label="Tên đăng nhập" type="text" value={username} setValue={e => setUsername(e.target.value)} />
+                <InputItem label="Mật khẩu" type="password" value={password} setValue={e => setPassword(e.target.value)} />
+                
                 {loading?<Loading />:<Button variant="primary" type="submit">Đăng nhập</Button>}
             </Form>
         </>
