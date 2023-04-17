@@ -12,6 +12,10 @@ import UserReducer from './reducers/UserReducer';
 import { useReducer } from 'react';
 import cookie from 'react-cookies';
 import Register from './components/Register';
+import 'moment/locale/vi';
+import moment from 'moment'
+
+moment().locale("vi")
 
 function App() {
   let current = cookie.load("current-user")

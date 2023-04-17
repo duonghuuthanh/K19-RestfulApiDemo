@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { Button, Form } from "react-bootstrap"
 import cookie from "react-cookies"
 import { Navigate } from "react-router-dom"
-import API, { endpoinds } from "../configs/API"
+import API, { authAPI, endpoinds } from "../configs/API"
 import { UserContext } from "../configs/MyContext"
 import Loading from "../layouts/Loading"
 
@@ -30,11 +30,7 @@ const Login = () => {
 
                 cookie.save("access_token", res.data.access_token)
 
-                let user = await API.get(endpoinds['current-user'], {
-                    headers: {
-                        "Authorization": `Bearer ${cookie.load('access_token')}`
-                    }
-                })
+                let user = await authAPI().get(endpoinds['current-user'])
     
                 cookie.save("current-user", user.data)
     
