@@ -10,7 +10,7 @@ const Login = () => {
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState([])
+    const [error, setError] = useState()
     const [user, dispatch] = useContext(UserContext)
 
 
