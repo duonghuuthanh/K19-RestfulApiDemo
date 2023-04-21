@@ -12,6 +12,7 @@ const Lessons = () => {
     useEffect(() => {
         const loadLessons = async () => {
             let res = await API.get(endpoints['lessons'](courseId))
+            
             setLessons(res.data)
         }
 

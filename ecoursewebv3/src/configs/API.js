@@ -9,7 +9,9 @@ export const endpoints = {
     'login': '/o/token/',
     'current-user': '/users/current-user/',
     'register': '/users/',
-    'comments': (lessonId) => `/lessons/${lessonId}/comments/`
+    'comments': (lessonId) => `/lessons/${lessonId}/comments/`,
+    'like': (lessonId) => `/lessons/${lessonId}/like/`,
+    'rate': (lessonId) => `/lessons/${lessonId}/rating/`,
 }
 
 export const authAPI = () => axios.create({
